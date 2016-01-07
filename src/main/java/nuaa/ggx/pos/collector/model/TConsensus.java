@@ -18,7 +18,7 @@ import javax.persistence.Table;
  * TConsensus entity. @author MyEclipse Persistence Tools
  */
 @Entity
-@Table(name = "t_consensus", catalog = "nuaacempss")
+@Table(name = "t_consensus", catalog = "nuaacempos")
 public class TConsensus implements java.io.Serializable {
 
 	// Fields

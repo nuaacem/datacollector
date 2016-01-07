@@ -9,7 +9,7 @@ import javax.persistence.Table;
  * TWeiboUser entity. @author MyEclipse Persistence Tools
  */
 @Entity
-@Table(name = "t_weibo_user", catalog = "nuaacempss")
+@Table(name = "t_weibo_user", catalog = "nuaacempos")
 public class TWeiboUser implements java.io.Serializable {
 
 	// Fields

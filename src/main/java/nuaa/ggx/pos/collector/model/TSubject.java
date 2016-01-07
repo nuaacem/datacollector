@@ -24,7 +24,7 @@ import javax.persistence.Table;
  * TSubject entity. @author MyEclipse Persistence Tools
  */
 @Entity
-@Table(name = "t_subject", catalog = "nuaacempss")
+@Table(name = "t_subject", catalog = "nuaacempos")
 public class TSubject implements java.io.Serializable {
 
 	// Fields
@@ -141,7 +141,7 @@ public class TSubject implements java.io.Serializable {
 	}
 	
 	@ManyToMany(fetch = FetchType.EAGER)
-	@JoinTable(name = "t_subject_website", catalog = "nuaacempss", joinColumns = { @JoinColumn(name = "subject_id", nullable = false, updatable = true) }, inverseJoinColumns = { @JoinColumn(name = "website_id", nullable = false, updatable = true) })
+	@JoinTable(name = "t_subject_website", catalog = "nuaacempos", joinColumns = { @JoinColumn(name = "subject_id", nullable = false, updatable = true) }, inverseJoinColumns = { @JoinColumn(name = "website_id", nullable = false, updatable = true) })
 	public Set<TWebsite> getTWebsites() {
 		return this.TWebsites;
 	}

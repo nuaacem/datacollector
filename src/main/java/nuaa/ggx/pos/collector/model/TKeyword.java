@@ -24,7 +24,7 @@ import javax.persistence.Table;
  * TKeyword entity. @author MyEclipse Persistence Tools
  */
 @Entity
-@Table(name = "t_keyword", catalog = "nuaacempss")
+@Table(name = "t_keyword", catalog = "nuaacempos")
 public class TKeyword implements java.io.Serializable {
 
 	// Fields
@@ -115,7 +115,7 @@ public class TKeyword implements java.io.Serializable {
 	}
 
 	@ManyToMany(fetch = FetchType.LAZY)
-	@JoinTable(name = "t_consensus_keyword", catalog = "nuaacempss", joinColumns = { @JoinColumn(name = "keyword_id", nullable = false, updatable = false) }, inverseJoinColumns = { @JoinColumn(name = "consensus_id", nullable = false, updatable = false) })
+	@JoinTable(name = "t_consensus_keyword", catalog = "nuaacempos", joinColumns = { @JoinColumn(name = "keyword_id", nullable = false, updatable = false) }, inverseJoinColumns = { @JoinColumn(name = "consensus_id", nullable = false, updatable = false) })
 	public Set<TConsensus> getTConsensuses() {
 		return this.TConsensuses;
 	}

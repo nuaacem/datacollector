@@ -19,7 +19,7 @@ import org.hibernate.annotations.Parameter;
  * TConsensusDetail entity. @author MyEclipse Persistence Tools
  */
 @Entity
-@Table(name = "t_consensus_detail", catalog = "nuaacempss", uniqueConstraints = @UniqueConstraint(columnNames = "div_id"))
+@Table(name = "t_consensus_detail", catalog = "nuaacempos", uniqueConstraints = @UniqueConstraint(columnNames = "div_id"))
 public class TConsensusDetail implements java.io.Serializable {
 
 	// Fields

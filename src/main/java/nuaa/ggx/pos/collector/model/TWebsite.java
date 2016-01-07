@@ -22,7 +22,7 @@ import javax.persistence.Table;
  * TWebsite entity. @author MyEclipse Persistence Tools
  */
 @Entity
-@Table(name = "t_website", catalog = "nuaacempss")
+@Table(name = "t_website", catalog = "nuaacempos")
 public class TWebsite implements java.io.Serializable {
 
 	// Fields

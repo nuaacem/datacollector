@@ -27,7 +27,7 @@
     </filter>
     <filter-mapping>
         <filter-name>HiddenHttpMethodFilter</filter-name>
-        <servlet-name>nuaacempss</servlet-name>
+        <servlet-name>nuaacempos</servlet-name>
     </filter-mapping> -->
     <!-- 浏览器不支持put,delete等method,由该filter将/example?_method=delete转换为标准的http delete方法 -->
     
