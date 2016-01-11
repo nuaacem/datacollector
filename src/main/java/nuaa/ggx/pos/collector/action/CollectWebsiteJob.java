@@ -1,4 +1,4 @@
-package nuaa.ggx.pos.collector.service.action;
+package nuaa.ggx.pos.collector.action;
 
 public class CollectWebsiteJob {
 	
