@@ -7,11 +7,11 @@ import java.util.Set;
 
 import javax.annotation.Resource;
 
+import nuaa.ggx.pos.collector.action.WeiboJob;
 import nuaa.ggx.pos.collector.crawler.yecrawler.interfaces.IWeiboCrawler;
 import nuaa.ggx.pos.collector.model.TConsensus;
 import nuaa.ggx.pos.collector.model.TConsensusDetail;
 import nuaa.ggx.pos.collector.model.TKeyword;
-import nuaa.ggx.pos.collector.service.action.WeiboJob;
 import nuaa.ggx.pos.collector.service.interfaces.IConsensusDetailService;
 import nuaa.ggx.pos.collector.service.interfaces.IConsensusService;
 
