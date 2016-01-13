@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50537
 File Encoding         : 65001
 
-Date: 2016-01-07 16:17:45
+Date: 2016-01-13 09:45:02
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -163,7 +163,7 @@ CREATE TABLE `t_consensus_keyword` (
   KEY `FK_6alorwsthapfjstl29etv3w2v` (`keyword_id`),
   CONSTRAINT `FK_6alorwsthapfjstl29etv3w2v` FOREIGN KEY (`keyword_id`) REFERENCES `t_keyword` (`id`),
   CONSTRAINT `FK_ns60ya8921qvjth9jtawgy4ja` FOREIGN KEY (`consensus_id`) REFERENCES `t_consensus` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Table structure for t_consensus_tagword
@@ -201,6 +201,10 @@ CREATE TABLE `t_keyword` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `subject_id` int(11) DEFAULT NULL,
   `keyword` varchar(20) DEFAULT NULL,
+  `total_num` int(11) DEFAULT NULL,
+  `positive_num` int(11) DEFAULT NULL,
+  `neutral_num` int(11) DEFAULT NULL,
+  `negative_num` int(11) DEFAULT NULL,
   `update_num` int(11) DEFAULT NULL,
   `update_time` datetime DEFAULT NULL,
   `state` int(11) DEFAULT NULL,
@@ -221,13 +225,17 @@ CREATE TABLE `t_subject` (
   `subject_desc` varchar(255) DEFAULT NULL,
   `create_time` datetime DEFAULT NULL,
   `update_time` datetime DEFAULT NULL,
+  `total_num` int(11) DEFAULT NULL,
+  `positive_num` int(11) DEFAULT NULL,
+  `neutral_num` int(11) DEFAULT NULL,
+  `negative_num` int(11) DEFAULT NULL,
   `update_num` int(11) DEFAULT NULL,
   `state` int(11) DEFAULT NULL,
   `version` timestamp NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`),
   KEY `user_id` (`user_id`),
   CONSTRAINT `t_subject_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `t_user` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=25 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=23 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Table structure for t_subject_website
@@ -255,6 +263,38 @@ CREATE TABLE `t_tagword` (
   `word` varchar(20) DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Table structure for t_trend_day
+-- ----------------------------
+DROP TABLE IF EXISTS `t_trend_day`;
+CREATE TABLE `t_trend_day` (
+  `id` int(11) NOT NULL,
+  `oid` int(11) DEFAULT NULL,
+  `type` tinyint(4) DEFAULT NULL,
+  `day` int(11) DEFAULT NULL,
+  `total_num` int(11) DEFAULT NULL,
+  `positive_num` int(11) DEFAULT NULL,
+  `neutral_num` int(11) DEFAULT NULL,
+  `negative_num` int(11) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='object是统计的关键词或专题；当type=0是关键词统计，type=1是专题统计';
+
+-- ----------------------------
+-- Table structure for t_trend_hour
+-- ----------------------------
+DROP TABLE IF EXISTS `t_trend_hour`;
+CREATE TABLE `t_trend_hour` (
+  `id` int(11) NOT NULL,
+  `oid` int(11) DEFAULT NULL,
+  `type` tinyint(4) DEFAULT NULL,
+  `hour` int(11) DEFAULT NULL,
+  `total_num` int(11) DEFAULT NULL,
+  `positive_num` int(11) DEFAULT NULL,
+  `neutral_num` int(11) DEFAULT NULL,
+  `negative_num` int(11) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='object是统计的关键词或专题；当type=0是关键词统计，type=1是专题统计';
 
 -- ----------------------------
 -- Table structure for t_user
