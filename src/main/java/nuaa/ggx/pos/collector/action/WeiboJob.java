@@ -9,21 +9,15 @@ import java.util.Set;
 
 import javax.annotation.Resource;
 
+import com.gargoylesoftware.htmlunit.FailingHttpStatusCodeException;
+
 import nuaa.ggx.pos.collector.crawler.yecrawler.interfaces.IWeiboCrawler;
-import nuaa.ggx.pos.collector.crawler.yecrawler.model.User;
-import nuaa.ggx.pos.collector.model.Student;
 import nuaa.ggx.pos.collector.model.TKeyword;
 import nuaa.ggx.pos.collector.model.TSubject;
 import nuaa.ggx.pos.collector.service.interfaces.ISubjectService;
 import nuaa.ggx.pos.collector.util.Constants;
 
-import org.apache.log4j.Logger;
-
-import com.gargoylesoftware.htmlunit.FailingHttpStatusCodeException;
-
 public class WeiboJob {
-	
-	private static Logger log = Logger.getLogger(WeiboJob.class);
 	
 	@Resource
 	private ISubjectService subjectService;

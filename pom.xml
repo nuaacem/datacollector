@@ -27,16 +27,6 @@
 
 	<dependencies>
 		<dependency>
-			<groupId>antlr</groupId>
-			<artifactId>antlr</artifactId>
-			<version>2.7.7</version>
-		</dependency>
-		<dependency>
-			<groupId>aopalliance</groupId>
-			<artifactId>aopalliance</artifactId>
-			<version>1.0</version>
-		</dependency>
-		<dependency>
 			<groupId>aspectj</groupId>
 			<artifactId>aspectjrt</artifactId>
 			<version>1.5.3</version>
@@ -208,12 +198,26 @@
 			<version>5.1.34</version>
 			<scope>runtime</scope>
 		</dependency>
+
+		<dependency>
+			<groupId>org.apache.cxf</groupId>
+			<artifactId>cxf-rt-frontend-jaxws</artifactId>
+			<version>3.1.5</version>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.cxf</groupId>
+			<artifactId>cxf-rt-transports-http</artifactId>
+			<version>3.1.5</version>
+		</dependency>
+
+		<!-- 日志 -->
 		<dependency>
 			<groupId>log4j</groupId>
 			<artifactId>log4j</artifactId>
 			<version>1.2.16</version>
 		</dependency>
-		
+
+		<!-- 测试 -->
 		<dependency>
 			<groupId>junit</groupId>
 			<artifactId>junit</artifactId>
