@@ -1,32 +1,28 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<beans xmlns="http://www.springframework.org/schema/beans"
-	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xmlns:aop="http://www.springframework.org/schema/aop"
-	xmlns:tx="http://www.springframework.org/schema/tx"
-	xmlns:context="http://www.springframework.org/schema/context"
-	xmlns:jaxws="http://cxf.apache.org/jaxws"
+<beans xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:jaxws="http://cxf.apache.org/jaxws"
+	xmlns:aop="http://www.springframework.org/schema/aop" xmlns="http://www.springframework.org/schema/beans"
+	xmlns:context="http://www.springframework.org/schema/context" xmlns:tx="http://www.springframework.org/schema/tx"
 	xsi:schemaLocation="
-	http://www.springframework.org/schema/beans
-	http://www.springframework.org/schema/beans/spring-beans.xsd
-	http://www.springframework.org/schema/tx
-	http://www.springframework.org/schema/tx/spring-tx.xsd
-	http://www.springframework.org/schema/aop
-	http://www.springframework.org/schema/aop/spring-aop.xsd
-	http://www.springframework.org/schema/context 
-	http://www.springframework.org/schema/context/spring-context.xsd
-	http://cxf.apache.org/jaxws http://cxf.apache.org/schemas/jaxws.xsd">  
+           http://cxf.apache.org/jaxws                   http://cxf.apache.org/schemas/jaxws.xsd
+           http://www.springframework.org/schema/aop     http://www.springframework.org/schema/aop/spring-aop.xsd
+           http://www.springframework.org/schema/beans   http://www.springframework.org/schema/beans/spring-beans.xsd
+           http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd
+           http://www.springframework.org/schema/tx      http://www.springframework.org/schema/tx/spring-tx.xsd
+       ">
 
 	<!-- 扫描注解Repository -->
 	<!-- use-default-filters="false" 只扫描指定的注解 -->
 	<context:component-scan base-package="nuaa.ggx.pos.collector.dao" use-default-filters="false">
-		<context:include-filter type="annotation" expression="org.springframework.stereotype.Repository"/>
+		<context:include-filter type="annotation" expression="org.springframework.stereotype.Repository" />
 	</context:component-scan>
 
 	<!-- 扫描注解Service -->
 	<!-- use-default-filters="false" 只扫描指定的注解 -->
 	<context:component-scan base-package="nuaa.ggx.pos.collector.service" use-default-filters="false">
-		<context:include-filter type="annotation" expression="org.springframework.stereotype.Service"/>
+		<context:include-filter type="annotation" expression="org.springframework.stereotype.Service" />
 	</context:component-scan>
+
+	<context:component-scan base-package="nuaa.ggx.pos.collector.crawler" use-default-filters="true" />
 
 	<bean id="propertyConfigurer" class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
 		<property name="locations">
@@ -39,19 +35,19 @@
 	</bean>
 
 	<bean id="dataSource" class="org.logicalcobwebs.proxool.ProxoolDataSource">
-		<property name="alias" value="proxoolDataSource"/>
+		<property name="alias" value="proxoolDataSource" />
 		<property name="driver" value="${connection.driver_class}" />
 		<property name="driverUrl" value="${connection.url}" />
 		<property name="user" value="${connection.username}" />
 		<property name="password" value="${connection.password}" />
 		<property name="statistics" value="${proxool.statistics}" />
-		<property name="maximumConnectionCount" value="${proxool.maximum.connection.count}"/>
-		<property name="minimumConnectionCount" value="${proxool.minimum.connection.count}"/>		
-		<property name="simultaneousBuildThrottle" value="${proxool.simultaneous.build.throttle}"/>
+		<property name="maximumConnectionCount" value="${proxool.maximum.connection.count}" />
+		<property name="minimumConnectionCount" value="${proxool.minimum.connection.count}" />
+		<property name="simultaneousBuildThrottle" value="${proxool.simultaneous.build.throttle}" />
 	</bean>
 
-	<bean id="sessionFactory" class="org.springframework.orm.hibernate4.LocalSessionFactoryBean" >
-		<property name="dataSource" ref="dataSource"/>
+	<bean id="sessionFactory" class="org.springframework.orm.hibernate4.LocalSessionFactoryBean">
+		<property name="dataSource" ref="dataSource" />
 		<property name="hibernateProperties">
 			<props>
 				<prop key="hibernate.dialect">${hibernate.dialect}</prop>
@@ -61,35 +57,37 @@
 				<prop key="hibernate.default_batch_fetch_size">${hibernate.default_batch_fetch_size}</prop>
 				<prop key="hibernate.max_fetch_depth">${hibernate.max_fetch_depth}</prop>
 				<prop key="hibernate.generate_statistics">${hibernate.generate_statistics}</prop>
-				<prop key="hibernate.bytecode.use_reflection_optimizer">${hibernate.bytecode.use_reflection_optimizer}</prop>
+				<prop key="hibernate.bytecode.use_reflection_optimizer">
+					${hibernate.bytecode.use_reflection_optimizer}
+				</prop>
 				<prop key="hibernate.cache.use_second_level_cache">${hibernate.cache.use_second_level_cache}</prop>
 				<prop key="hibernate.cache.use_query_cache">${hibernate.cache.use_query_cache}</prop>
-				<prop key="hibernate.cache.region.factory_class">${hibernate.cache.region.factory_class}</prop>      
+				<prop key="hibernate.cache.region.factory_class">${hibernate.cache.region.factory_class}</prop>
 				<prop key="hibernate.cache.use_structured_entries">${hibernate.cache.use_structured_entries}</prop>
 				<prop key="hibernate.current_session_context_class">${hibernate.current_session_context_class}</prop>
 				<prop key="hibernate.hbm2ddl.auto">${hibernate.hbm2ddl.auto}</prop>
 				<prop key="net.sf.ehcache.configurationResourceName">${net.sf.ehcache.configurationResourceName}</prop>
 			</props>
 		</property>
-		<property name="annotatedClasses">  
-			<list>  
+		<property name="annotatedClasses">
+			<list>
 				<value>nuaa.ggx.pos.collector.model.TConsensus</value>
 				<value>nuaa.ggx.pos.collector.model.TConsensusDetail</value>
 				<value>nuaa.ggx.pos.collector.model.TKeyword</value>
 				<value>nuaa.ggx.pos.collector.model.TSubject</value>
 				<value>nuaa.ggx.pos.collector.model.TWebsite</value>
 				<value>nuaa.ggx.pos.collector.model.TWeiboUser</value>
-			</list>  
-		</property>  
+			</list>
+		</property>
 	</bean>
 
 	<!-- 开启注解事务 只对当前配置文件有效 注解事务和下面的声明式事务只需选择其中一种，推荐用声明式事务 -->
 	<!-- <aop:aspectj-autoproxy expose-proxy="true"/>	
-		  <tx:annotation-driven transaction-manager="h4TManager"/> -->
-  	
+		<tx:annotation-driven transaction-manager="h4TManager"/> -->
+
 	<!-- 声明式事务配置开始 -->
 	<bean id="h4TManager" class="org.springframework.orm.hibernate4.HibernateTransactionManager">
-		<property name="sessionFactory" ref="sessionFactory"/>
+		<property name="sessionFactory" ref="sessionFactory" />
 	</bean>
 	<tx:advice id="h4TAdvice" transaction-manager="h4TManager">
 		<tx:attributes>
@@ -106,17 +104,16 @@
 	<aop:config expose-proxy="true">
 		<!-- 对基类业务逻辑层实施事务 -->
 		<aop:pointcut id="h4TPointcut" expression="execution(* nuaa.ggx.pos.collector.service..*.*(..))" />
-		<aop:advisor advice-ref="h4TAdvice" pointcut-ref="h4TPointcut"/>
+		<aop:advisor advice-ref="h4TAdvice" pointcut-ref="h4TPointcut" />
 	</aop:config>
 	<!-- 声明式事务配置结束 -->
-    
-	<bean id="webClient" class="com.gargoylesoftware.htmlunit.WebClient">
-	</bean>
-    
+
+	<bean id="webClient" class="com.gargoylesoftware.htmlunit.WebClient"></bean>
+
 	<bean id="weiboCrawler" class="nuaa.ggx.pos.collector.crawler.yecrawler.impl.WeiboCrawler">
 		<property name="pageStart">
 			<value>${pagestart}</value>
-		</property>						
+		</property>
 		<property name="pageEnd">
 			<value>${pageend}</value>
 		</property>
@@ -127,12 +124,10 @@
 			<value>${password}</value>
 		</property>
 	</bean>
-    
-	<bean id="weiboJob" class="nuaa.ggx.pos.collector.service.action.WeiboJob">
-	</bean>
-    
-	<bean id="weiboJobTask"
-		class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+
+	<bean id="weiboJob" class="nuaa.ggx.pos.collector.service.action.WeiboJob"></bean>
+
+	<bean id="weiboJobTask" class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
 		<property name="targetObject">
 			<ref bean="weiboJob" />
 		</property>
@@ -143,7 +138,7 @@
 			<value>false</value>
 		</property>
 	</bean>
-	
+
 	<bean id="weiboJobTrigger" class="org.springframework.scheduling.quartz.CronTriggerBean">
 		<property name="jobDetail">
 			<ref bean="weiboJobTask" />
@@ -152,18 +147,20 @@
 			<value>${task.weiboJob.cycle}</value>
 		</property>
 	</bean>
-	
-	<bean id="startQuartz" lazy-init="false"
-		class="org.springframework.scheduling.quartz.SchedulerFactoryBean">
+
+	<bean id="startQuartz" lazy-init="false" class="org.springframework.scheduling.quartz.SchedulerFactoryBean">
 		<property name="triggers">
 			<list>
-				<ref bean="weiboJobTrigger"/>
+				<ref bean="weiboJobTrigger" />
 			</list>
 		</property>
 		<property name="autoStartup" value="true" />
 		<property name="schedulerName" value="cronScheduler" />
 	</bean>
-	
-	<bean id="SayHello" class="nuaa.ggx.pos.collector.soap.impl.WSTest" />  
-	<jaxws:endpoint id="sayHello" implementor="#SayHello" address="/sayHello"/> 
+
+	<bean id="SayHello" class="nuaa.ggx.pos.collector.soap.impl.WSTest" />
+	<jaxws:endpoint id="sayHello" implementor="#SayHello" address="/sayHello" />
+
+	<bean id="collectCommentImpl" class="nuaa.ggx.pos.collector.soap.impl.CollectComment" />
+	<jaxws:endpoint id="collectComment" implementor="#collectCommentImpl" address="/collectComment" />
 </beans>
