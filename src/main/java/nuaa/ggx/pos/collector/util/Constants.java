@@ -5,7 +5,6 @@ import java.util.concurrent.Executors;
 
 public class Constants {
 
-	public static ExecutorService WEIBO_CRAWLER_POOL = Executors
-			.newFixedThreadPool(10);
+	public static ExecutorService WEIBO_CRAWLER_POOL = Executors.newFixedThreadPool(10);
 
 }

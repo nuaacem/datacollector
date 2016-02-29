@@ -14,6 +14,10 @@ public class TWeiboUser implements java.io.Serializable {
 
 	// Fields
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -2746039475464444520L;
 	private String uid;
 	private String nickname;
 	private Integer type;

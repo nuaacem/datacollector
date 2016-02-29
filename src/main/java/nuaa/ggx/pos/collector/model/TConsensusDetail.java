@@ -24,6 +24,10 @@ public class TConsensusDetail implements java.io.Serializable {
 
 	// Fields
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -6264246288170141056L;
 	private Integer consensusId;
 	private TConsensus TConsensus;
 	private String divId;

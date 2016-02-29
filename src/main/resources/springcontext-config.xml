@@ -108,7 +108,9 @@
     </aop:config>
     <!-- 声明式事务配置结束 -->
     
+    <!-- ioc webcrawler -->
     <bean id="webClient" class="com.gargoylesoftware.htmlunit.WebClient">
+    
     </bean>
     
     <bean id="weiboCrawler" class="nuaa.ggx.pos.collector.crawler.yecrawler.impl.WeiboCrawler">
@@ -126,11 +128,12 @@
 		</property>
     </bean>
     
+    <!-- 微博任务启动，并进行定时爬取 -->
     <bean id="weiboJob" class="nuaa.ggx.pos.collector.service.action.WeiboJob">
+    
     </bean>
     
-    <bean id="weiboJobTask"
-		class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+    <bean id="weiboJobTask"	class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
 		<property name="targetObject">
 			<ref bean="weiboJob" />
 		</property>
@@ -151,8 +154,7 @@
 		</property>
 	</bean>
 	
-	<bean id="startQuartz" lazy-init="false"
-		class="org.springframework.scheduling.quartz.SchedulerFactoryBean">
+	<bean id="startQuartz" lazy-init="false" class="org.springframework.scheduling.quartz.SchedulerFactoryBean">
 		<property name="triggers">
 			<list>
 				<ref bean="weiboJobTrigger"/>
@@ -161,4 +163,5 @@
 		<property name="autoStartup" value="true" />
 		<property name="schedulerName" value="cronScheduler" />
 	</bean>
+	
 </beans>

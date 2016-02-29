@@ -10,8 +10,6 @@ import java.util.Set;
 import javax.annotation.Resource;
 
 import nuaa.ggx.pos.collector.crawler.yecrawler.interfaces.IWeiboCrawler;
-import nuaa.ggx.pos.collector.crawler.yecrawler.model.User;
-import nuaa.ggx.pos.collector.model.Student;
 import nuaa.ggx.pos.collector.model.TKeyword;
 import nuaa.ggx.pos.collector.model.TSubject;
 import nuaa.ggx.pos.collector.service.interfaces.ISubjectService;
@@ -23,6 +21,7 @@ import com.gargoylesoftware.htmlunit.FailingHttpStatusCodeException;
 
 public class WeiboJob {
 	
+	@SuppressWarnings("unused")
 	private static Logger log = Logger.getLogger(WeiboJob.class);
 	
 	@Resource
@@ -32,6 +31,7 @@ public class WeiboJob {
 	private IWeiboCrawler weiboCrawler;
 	
 	public void execute(){
+		
 		Set<TKeyword> keywords = listKeywords();
 		if (keywords != null) {
 			for (TKeyword tKeyword : keywords) {
@@ -41,9 +41,14 @@ public class WeiboJob {
 		}
 	}
 	
+	/**
+	 * @return
+	 */
 	public Set<TKeyword> listKeywords() {
+		
 		List<TSubject> subjects = subjectService.listAll();
 		Set<TKeyword> keywords = new HashSet<TKeyword>();
+		
 		for (TSubject tSubject : subjects) {
 			keywords.addAll(tSubject.getTKeywords());
 		}

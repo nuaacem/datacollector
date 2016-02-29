@@ -4,20 +4,11 @@ import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URLEncoder;
 import java.sql.Timestamp;
-import java.text.DateFormat;
 import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-
-import javax.annotation.Resource;
 
 import nuaa.ggx.pos.collector.crawler.yecrawler.interfaces.IWeiboCrawler;
-import nuaa.ggx.pos.collector.crawler.yecrawler.model.User;
-import nuaa.ggx.pos.collector.crawler.yecrawler.model.Weibo;
 import nuaa.ggx.pos.collector.dao.impl.BaseDao;
-import nuaa.ggx.pos.collector.dao.interfaces.IWeiboUserDao;
 import nuaa.ggx.pos.collector.model.TConsensus;
 import nuaa.ggx.pos.collector.model.TConsensusDetail;
 import nuaa.ggx.pos.collector.model.TWeiboUser;
@@ -29,7 +20,6 @@ import nuaa.ggx.pos.collector.util.WeiboTools;
 import org.apache.commons.lang3.StringEscapeUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.log4j.Logger;
-import org.aspectj.weaver.patterns.ThisOrTargetAnnotationPointcut;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
@@ -38,7 +28,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import com.gargoylesoftware.htmlunit.FailingHttpStatusCodeException;
 import com.gargoylesoftware.htmlunit.WebClient;
-import com.gargoylesoftware.htmlunit.html.HtmlCheckBoxInput;
 import com.gargoylesoftware.htmlunit.html.HtmlElement;
 import com.gargoylesoftware.htmlunit.html.HtmlPage;
 import com.gargoylesoftware.htmlunit.html.HtmlPasswordInput;
@@ -85,7 +74,6 @@ public class WeiboComCrawler implements IWeiboCrawler {
 
 		boolean state = false;
 		HtmlPage page = client.getPage("http://login.weibo.cn/login/");
-		// System.out.println(page.asText());
 
 		HtmlTextInput ln = (HtmlTextInput) page.getElementByName("mobile");
 		page.setFocusedElement((HtmlElement) page.getElementByName("mobile"));
@@ -215,77 +203,12 @@ public class WeiboComCrawler implements IWeiboCrawler {
 		return consensusDetail;
 	}
 
-	/*public void collectInfo(HtmlPage page, String userKey)
-			throws FailingHttpStatusCodeException, MalformedURLException,
-			IOException {
-
-		// 判断是否登录
-		if (page.getUrl().toString().contains("login.weibo.cn")) {
-			login("nuaais@sina.cn", "admin123456");
-		}
-
-		Document pagedoc = Jsoup.parse(page.asXml());
-
-		Elements rows = pagedoc.getElementsByClass("c");
-
-		if (rows != null && rows.size() > 0) {
-			for (int i = 0; i < rows.size(); i++) {
-				Element aRow = rows.get(i);
-				if (!aRow.hasAttr("id")) {
-					continue;
-				}
-
-				Weibo weibo = new Weibo();
-				User user = new User();
-
-				weibo.setDivId(aRow.attr("id"));
-
-				weibo.setUserId(userKey);
-
-				Elements ctts = aRow.getElementsByClass("ctt");
-				if (ctts != null) {
-					Element ctt = ctts.get(0);
-					weibo.setContent(ctt.text().replaceAll("'", "\'"));
-				}
-				String time = aRow.getElementsByClass("ct").first().text();
-				if (time != null && time != "") {
-					String pubTime = AnalyseWeibo.getFormulaDate(time);
-					weibo.setPubTime(pubTime);
-				}
-
-				Elements cmts = aRow.getElementsByClass("cmt");
-				if (cmts != null && cmts.size() != 0) {
-					Elements aTags = cmts.get(0).getElementsByTag("a");
-					Element aUser;
-					if (aTags != null && aTags.size() != 0) {
-						aUser = aTags.get(0);
-						User cmtUser = new User();
-						if (aUser != null) {
-							AnalyseWeibo.analysisUser(aUser, cmtUser);
-							UserDao.addUser(cmtUser);
-							weibo.setCmtUid(cmtUser.getUid());
-							Elements ccs = aRow.getElementsByClass("cc");
-							if (ccs != null && ccs.size() != 0) {
-								Element cc = ccs.get(0);
-								String oriCmtUrl = cc.attr("href");
-								weibo.setOriCmtUrl(oriCmtUrl);
-							}
-						}
-					}
-					// String cmtReason = cmts.last().text();
-					// if (cmtReason != null && cmtReason != "") {
-					// weibo.setCmtReason(cmtReason);
-					// }
-				}
-				WeiboDao.addWeibo(weibo);
-			}
-		}
-	}*/
 	
 	@Override
 	public void crawl(String keyword)
 			throws FailingHttpStatusCodeException, MalformedURLException,
 			IOException, ParseException {
+		
 		login();
 		String enKey = URLEncoder.encode(keyword, "UTF-8");
 		String searchString = "http://weibo.cn/search/mblog?keyword="
@@ -302,6 +225,7 @@ public class WeiboComCrawler implements IWeiboCrawler {
 			Elements rows = pagedoc.getElementsByClass("c");
 
 			if (rows != null && rows.size() > 0) {
+				
 				for (Element aRow : rows) {
 					TConsensusDetail consensus = collectInfo(aRow);
 					if (null != consensus) {
@@ -324,19 +248,6 @@ public class WeiboComCrawler implements IWeiboCrawler {
 		}
 	}
 
-	/*public void crawlUser(String keyword, int pageStart, int pageEnd)
-			throws FailingHttpStatusCodeException, MalformedURLException,
-			IOException {
-		// login();
-		String enKey = URLEncoder.encode(keyword, "UTF-8");
-		String searchString = "http://weibo.cn/" + enKey + "?page=";
-		for (int i = pageStart; i <= pageEnd; i++) {
-			HtmlPage page = client.getPage(searchString + i);
-			System.out.println("page:" + i);
-			collectInfo(page, keyword);
-		}
-	}*/
-
 	private boolean analysisUser(Element aUser,TWeiboUser weiboUser) {
 		String userName = aUser.text();
 		if (userName != null && userName != "") {
@@ -356,19 +267,4 @@ public class WeiboComCrawler implements IWeiboCrawler {
 		return true;
 	}
 	
-	public static void main(String[] args) {
-		Logger log = Logger.getLogger(BaseDao.class);
-		System.out.println(StringEscapeUtils.escapeHtml4(""));
-	}
-	// public static void main(String[] args) {
-	// try {
-	// crawlSearch("王思聪", 15, 100);
-	// } catch (FailingHttpStatusCodeException e) {
-	// e.printStackTrace();
-	// } catch (MalformedURLException e) {
-	// e.printStackTrace();
-	// } catch (IOException e) {
-	// e.printStackTrace();
-	// }
-	// }
 }
